@@ -9,7 +9,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class AutoLava extends Module {
     public AutoLava() {
-        super("AutoLava", Category.COMBAT);
+        super("AutoLava", "Automatically places lava at your feet", 0, Category.COMBAT);
     }
 
     @Override
