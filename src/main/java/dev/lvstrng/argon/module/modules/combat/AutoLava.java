@@ -25,14 +25,13 @@ public class AutoLava extends Module {
     private State state = State.IDLE;
 
     private final double range = 4.5;
-    private final int scoopDelayTicks = 8; // Lava uthane ka delay
+    private final int scoopDelayTicks = 8;
     private final int postCycleCooldown = 10;
 
     public AutoLava() {
         super("AutoLava", "Automatically places lava at enemy's feet and scoops it back with AC bypass", 0, Category.COMBAT);
     }
 
-    @Override
     public void onEnable() {
         state = State.IDLE;
         timer = 0;
@@ -40,12 +39,10 @@ public class AutoLava extends Module {
         targetPos = null;
     }
 
-    @Override
     public void onDisable() {
         resetState();
     }
 
-    @Override
     public void onUpdate() {
         if (mc.player == null || mc.world == null || mc.interactionManager == null) return;
 
@@ -69,7 +66,6 @@ public class AutoLava extends Module {
                 targetPos = feetPos;
                 originalSlot = mc.player.getInventory().selectedSlot;
                 
-                // Anti-Cheat Bypass: Slot change packet bhejo taaki desync na ho
                 selectSlot(lavaSlot);
 
                 timer = 0;
@@ -82,7 +78,6 @@ public class AutoLava extends Module {
                     return;
                 }
 
-                // Anti-Cheat Bypass: Target block ki taraf client ka view/rotation rotate karo
                 faceTarget(targetPos);
 
                 BlockHitResult hit = buildHit(targetPos);
@@ -134,7 +129,6 @@ public class AutoLava extends Module {
         float yaw = (float) (Math.toDegrees(Math.atan2(dz, dx)) - 90.0);
         float pitch = (float) (-Math.toDegrees(Math.atan2(dy, dist)));
 
-        // Server ko rotation packet bhejte hain taaki anti-cheat ko lage player sach me dekh raha hai
         mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(yaw, pitch, mc.player.isOnGround()));
     }
 
