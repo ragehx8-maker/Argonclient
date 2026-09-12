@@ -2,10 +2,12 @@ package dev.lvstrng.argon.module.modules.combat;
 
 import dev.lvstrng.argon.module.Category;
 import dev.lvstrng.argon.module.Module;
-import dev.lvstrng.argon.utils.BlockUtils;
 import dev.lvstrng.argon.utils.InventoryUtils;
 import net.minecraft.item.Items;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.hit.BlockHitResult;
 
 public class AutoLava extends Module {
     public AutoLava() {
@@ -13,12 +15,14 @@ public class AutoLava extends Module {
     }
 
     public void onUpdate() {
-        if (mc.player == null || mc.world == null) return;
+        if (mc.player == null || mc.world == null || mc.interactionManager == null) return;
 
         boolean found = InventoryUtils.selectItemFromHotbar(Items.LAVA_BUCKET);
         if (!found) return;
 
         BlockPos pos = mc.player.getBlockPos().down();
-        BlockUtils.placeBlock(pos);
+        
+        // Direct interaction to place lava block
+        mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, new BlockHitResult(mc.player.getPos(), Direction.UP, pos, false));
     }
 }
