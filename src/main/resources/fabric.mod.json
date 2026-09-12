@@ -24,9 +24,9 @@
     "client.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=${loader_version}",
+    "fabricloader": ">=0.16.5",
     "fabric": "*",
-    "minecraft": "~1.21"
+    "minecraft": ">=1.21 <=1.21.1"
   },
   "recommends": {
     "sodium": "*"
