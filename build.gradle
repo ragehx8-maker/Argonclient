@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.9-SNAPSHOT'
+    id 'fabric-loom' version '1.9.2'
     id 'maven-publish'
 }
 
@@ -11,7 +11,7 @@ base {
 }
 
 repositories {
-    // Add repositories to retrieve artifacts from in here.
+    maven { url 'https://maven.fabricmc.net/' }
 }
 
 configurations {
@@ -19,7 +19,6 @@ configurations {
 }
 
 dependencies {
-    // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
@@ -63,13 +62,9 @@ jar {
     from("LICENSE") {
         rename { "${it}_${project.archivesBaseName}" }
     }
-
-    // Include JARs from lib/ directory in the final JAR
     from {
         configurations.shadow.collect { it.isDirectory() ? it : zipTree(it) }
     }
-
-    // Avoid duplicating META-INF files when merging libraries
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
@@ -78,9 +73,5 @@ publishing {
         mavenJava(MavenPublication) {
             from components.java
         }
-    }
-
-    repositories {
-        // Add repositories to publish to here.
     }
 }
