@@ -29,12 +29,6 @@ dependencies {
     compileOnly files("lib/annotations-1.0.6.jar")
 }
 
-loom {
-    unpick {
-        enabled = false
-    }
-}
-
 processResources {
     inputs.property "version", project.version
     inputs.property "minecraft_version", project.minecraft_version
